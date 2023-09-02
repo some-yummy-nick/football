@@ -49,7 +49,7 @@ if (!Object.keys(leagues.value).length) {
 
 function setValuesFromData(data) {
   leagueSeasons.value = Array.from(new Set(data.map((item) => item.league_season))).sort();
-  leagueSeason.value = '2023'
+  leagueSeason.value = String(new Date().getFullYear())
   filteredLeagues.value = filterBylLeagueSeason(data);
 }
 
