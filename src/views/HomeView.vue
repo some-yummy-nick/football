@@ -3,10 +3,7 @@
     <div class="home">
       <div class="home__wrapper">
         <router-link :to="{ name: 'leagues' }" class="item home__item">
-          Лиги
-        </router-link>
-        <router-link :to="{ name: 'teams' }" class="item home__item">
-          Команды
+          Leagues
         </router-link>
       </div>
     </div>

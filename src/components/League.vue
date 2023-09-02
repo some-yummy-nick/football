@@ -1,22 +1,29 @@
 <template>
-  <router-link :to="{ name: 'leagues' }">
-    Назад
-  </router-link>
-  <div v-if="league" class="league">
-    <img class="league__image" v-if="league.league_logo" :src="league.league_logo" :alt="league.league_name">
-    <div class="league__row">
-      <span class="league__prop">Name:</span>
-      <span class="league__value">{{ league.league_name }}</span>
-    </div>
-    <div class="league__row">
-      <span class="league__prop">Season:</span>
-      <span class="league__value">{{ league.league_season }}</span>
-    </div>
-    <div class="league__row">
-      <span class="league__prop">Country:</span>
-      <span class="league__value">{{ league.country_name }}
+  <div>
+    <router-link :to="{ name: 'home' }" class="back">
+      Back
+    </router-link>
+    <div v-if="league" class="league">
+      <div class="inner-wrapper">
+        <img class="inner-wrapper__image" v-if="league.league_logo" :src="league.league_logo" :alt="league.league_name">
+        <div class="row">
+          <span class="row__prop">Name:</span>
+          <span class="row__value">{{ league.league_name }}</span>
+        </div>
+        <div class="row">
+          <span class="row__prop">Season:</span>
+          <span class="row__value">{{ league.league_season }}</span>
+        </div>
+        <div class="row">
+          <span class="row__prop">Country:</span>
+          <span class="row__value">{{ league.country_name }}
         <img class="league__county-flag" :src="league.country_logo" alt="">
       </span>
+        </div>
+      </div>
+      <router-link :to="{ name: 'teams', params:{league_id:league.league_id} }" class="item home__item">
+        Teams
+      </router-link>
     </div>
   </div>
 </template>
@@ -42,6 +49,7 @@ async function getLeagues() {
   store.commit('setLeagues', response)
   league.value = response.find(item => item.league_id === id.value)
 }
+
 if (!Object.keys(leagues.value).length) {
   getLeagues()
 } else {
@@ -55,22 +63,6 @@ if (!Object.keys(leagues.value).length) {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  &__image {
-    width: 100px;
-    margin-bottom: 20px;
-  }
-
-  &__prop {
-    font-weight: 700;
-    margin-right: 10px;
-  }
-
-  &__value {
-    display: inline-flex;
-    align-items: center;
-    gap:5px;
-  }
 
   &__county-flag {
     width: 20px;

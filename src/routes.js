@@ -1,17 +1,12 @@
-import HomeView from "@/views/HomeView.vue";
 import Leagues from "@/components/Leagues.vue";
 import League from "@/components/League.vue";
 import Teams from "@/components/Teams.vue";
+import Team from "@/components/Team.vue";
 
 export const routes = [
     {
         path: '/',
         name: 'home',
-        component: HomeView
-    },
-    {
-        path: '/leagues',
-        name: 'leagues',
         component: Leagues
     },
     {
@@ -20,8 +15,13 @@ export const routes = [
         component: League,
     },
     {
-        path: '/teams',
+        path: '/teams/:league_id',
         name: 'teams',
         component: Teams
+    },
+    {
+        path: '/team/:id',
+        name: 'team',
+        component: Team,
     },
 ]
