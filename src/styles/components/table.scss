@@ -1,0 +1,15 @@
+.table {
+  border: 1px solid $border-color;
+  border-collapse: collapse;
+  text-align: center;
+
+  &__head{
+    font-weight: 700;
+  }
+
+  &__col,
+  &__head{
+    padding: 5px;
+    border: 1px solid $border-color;
+  }
+}

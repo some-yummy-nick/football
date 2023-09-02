@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div v-if="team && Object.keys(team).length">
     <button class="link reset-btn back" @click="$router.go(-1)">Back</button>
-    <div class="team" v-if="team">
+    <div class="team">
       <div class="inner-wrapper">
         <img class="inner-wrapper__image" v-if="team.team_badge" :src="team.team_badge" :alt="team.team_name">
         <h1 class="title">{{ team.team_name }}</h1>
@@ -26,13 +26,14 @@
             <td class="table__col">{{ player.player_age }}</td>
             <td class="table__col">{{ player.player_type }}</td>
             <td class="table__col">{{ player.player_goals }}</td>
-            <td class="table__col">{{ player.player_goals_conceded ? player.player_goals_conceded : '-' }}</td>
+            <td class="table__col">{{ player.player_goals_conceded }}</td>
           </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+  <Overlay v-else/>
 </template>
 
 <script setup>
@@ -40,6 +41,7 @@ import {computed, ref, onMounted} from 'vue'
 import {useRoute} from 'vue-router'
 
 import {request} from "@/api/index.js";
+import {adapterPlayers} from "@/utils/adapters";
 
 const route = useRoute()
 
@@ -47,7 +49,9 @@ const team = ref(null)
 const id = computed(() => route.params.id)
 
 async function getTeam() {
-  team.value = await (await request(`/?action=get_teams&team_id=${id.value}`))[0];
+  const response = await (await request(`/?action=get_teams&team_id=${id.value}`))[0]
+  const players = response.players.map(item => adapterPlayers(item));
+  team.value = {...response, players};
 }
 
 onMounted(() => {
@@ -56,8 +60,8 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.team{
-  &__photo{
+.team {
+  &__photo {
     width: 30px;
   }
 }

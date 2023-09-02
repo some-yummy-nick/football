@@ -1,0 +1,12 @@
+.row {
+  &__prop {
+    font-weight: 700;
+    margin-right: 10px;
+  }
+
+  &__value {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+}

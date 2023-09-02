@@ -1,0 +1,48 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @include scrollbars();
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px;
+  color: $text-color;
+}
+
+.reset-btn {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+button {
+  cursor: pointer;
+  font-size: 16px;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+a,
+.link {
+  text-decoration: none;
+  color: cornflowerblue;
+  transition: color 0.3s;
+
+  &:hover {
+    color: $text-color;
+  }
+}
+
+.select {
+  padding: 5px;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+}

@@ -1,0 +1,23 @@
+@mixin scrollbars(
+  $size: 5px,
+  $foreground-color: $border-color,
+  $background-color: transparent
+) {
+  // по стандартам (Firefox)
+  scrollbar-color: $foreground-color $background-color;
+
+  // для Chrome и Safari
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+  }
+}

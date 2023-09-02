@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div v-if="league && Object.keys(league).length">
     <router-link :to="{ name: 'home' }" class="back">
       Back
     </router-link>
-    <div v-if="league" class="league">
+    <div class="league">
       <div class="inner-wrapper">
         <img class="inner-wrapper__image" v-if="league.league_logo" :src="league.league_logo" :alt="league.league_name">
         <div class="row">
@@ -21,11 +21,12 @@
       </span>
         </div>
       </div>
-      <router-link :to="{ name: 'teams', params:{league_id:league.league_id} }" class="item home__item">
+      <router-link :to="{ name: 'teams', params:{league_id:league.league_id} }" class="item league__item">
         Teams
       </router-link>
     </div>
   </div>
+  <Overlay v-else/>
 </template>
 
 <script setup>
@@ -66,6 +67,10 @@ if (!Object.keys(leagues.value).length) {
 
   &__county-flag {
     width: 20px;
+  }
+
+  &__item{
+    align-self: initial;
   }
 }
 </style>

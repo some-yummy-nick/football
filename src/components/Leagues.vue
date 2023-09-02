@@ -4,7 +4,7 @@
     <div class="leagues__select-seasons">
       <label class="leagues__season-label">Season</label>
       <select class="select" @change="changeLeagueSeason" v-model="leagueSeason">
-        <option v-for="(item, index) in leagueSeasons"  :value="item" :key="'leagueSeason-' + index">
+        <option v-for="(item, index) in leagueSeasons" :value="item" :key="'leagueSeason-' + index">
           {{ item }}
         </option>
       </select>
@@ -16,6 +16,7 @@
       </router-link>
     </div>
   </div>
+  <Overlay v-else/>
 </template>
 
 <script setup>

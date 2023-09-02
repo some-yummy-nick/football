@@ -1,0 +1,12 @@
+.inner-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+
+  &__image {
+    width: 100px;
+    margin-bottom: 20px;
+  }
+}
