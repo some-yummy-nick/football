@@ -4,4 +4,8 @@
   align-items: center;
   grid-gap: 20px;
   text-align: center;
+
+  @media screen and (max-width: $mobile-width) {
+    grid-template-columns: 1fr;
+  }
 }

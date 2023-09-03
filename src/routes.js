@@ -2,26 +2,26 @@ export const routes = [
     {
         path: '/',
         name: 'home',
-        component: () => import("@/components/Leagues.vue"),
+        component: () => import("@/pages/Leagues.vue"),
     },
     {
         path: '/league/:id',
         name: 'league',
-        component: () => import("@/components/League.vue"),
+        component: () => import("@/pages/League.vue"),
     },
     {
         path: '/teams/:league_id',
         name: 'teams',
-        component: () => import("@/components/Teams.vue")
+        component: () => import("@/pages/Teams.vue")
     },
     {
         path: '/team/:id',
         name: 'team',
-        component: () => import("@/components/Team.vue"),
+        component: () => import("@/pages/Team.vue"),
     },
     {
         path: '/match/:id',
         name: 'match',
-        component: () => import("@/components/Match.vue")
+        component: () => import("@/pages/Match.vue")
     },
 ]

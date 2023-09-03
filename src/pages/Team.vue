@@ -12,37 +12,14 @@
           <div class="team__wrapper">
             <div class="team__block">
               <h2 class="team__title">Team players:</h2>
-              <table class="team__players table">
-                <thead>
-                <tr>
-                  <td class="table__head">Name</td>
-                  <td class="table__head">Age</td>
-                  <td class="table__head">Player type</td>
-                  <td class="table__head">Goals</td>
-                  <td class="table__head">Goals Conceded</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="player in team.players" :key="player.player_id">
-                  <td class="table__col">{{ player.player_name }}</td>
-                  <td class="table__col">{{ player.player_age }}</td>
-                  <td class="table__col">{{ player.player_type }}</td>
-                  <td class="table__col">{{ player.player_goals }}</td>
-                  <td class="table__col">{{ player.player_goals_conceded }}</td>
-                </tr>
-                </tbody>
-              </table>
+              <Players :players="team.players"/>
             </div>
-            <div class="team__block">
+            <div class="team__block" v-if="matches">
               <h2 class="team__title">Team matches:</h2>
-              <div class="team__matches">
-                <router-link v-for="match in matches" :key="match.match_id"
-                             :to="{ name: 'match', params: {id: match.match_id} }"
-                             class="team__match">
-                  {{ match.match_hometeam_name }} - {{ match.match_awayteam_name }} ({{ match.match_hometeam_score }} -
-                  {{ match.match_awayteam_score }})
-                </router-link>
-              </div>
+              <Matches :matches="matches"/>
+            </div>
+            <div class="team__block" v-else>
+              <h2 class="team__title">No matches</h2>
             </div>
           </div>
         </div>
@@ -56,8 +33,12 @@
 import {computed, ref, onMounted} from 'vue'
 import {useRoute} from 'vue-router'
 
+import Matches from "@/components/Matches.vue"
+import Players from "@/components/Players.vue"
+
 import {request} from "@/api/index.js";
 import {adapterPlayers} from "@/utils/adapters";
+import {getSeasons} from "@/utils";
 
 const route = useRoute()
 
@@ -72,7 +53,16 @@ async function getTeam() {
 }
 
 async function getMatches() {
-  matches.value = await (await request(`/?action=get_events&from=2023-01-01&to=2023-12-31&team_id=${id.value}`))
+  const seasons = getSeasons()
+  try {
+    const response = await request(`/?action=get_events&from=${seasons.firstDate}&to=${seasons.secondDate}&team_id=${id.value}`)
+    if (response.error) {
+      throw new Error(response.message)
+    }
+    matches.value = await (response)
+  } catch (e) {
+    console.error(e.message);
+  }
 }
 
 onMounted(() => {
@@ -82,6 +72,8 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+@import "@/styles/utils/variables";
+
 .team {
   &__photo {
     width: 30px;
@@ -93,8 +85,15 @@ onMounted(() => {
     gap: 20px;
   }
 
-  &__match {
-    display: block;
+  &__title {
+    margin-top: 0;
+    text-align: center;
+  }
+
+  @media screen and (max-width: $mobile-width) {
+    &__wrapper {
+      grid-template-columns: 1fr;
+    }
   }
 }
 </style>

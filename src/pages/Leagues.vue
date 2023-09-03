@@ -30,7 +30,7 @@ import {store} from "@/store";
 const leagues = ref(store.getters.leagues)
 const filteredLeagues = ref(null)
 const leagueSeasons = ref(null)
-const leagueSeason = ref(null)
+const leagueSeason = ref(store.getters.season)
 
 function filterBylLeagueSeason(items) {
   return items.filter((item) => item.league_season === leagueSeason.value);
@@ -51,13 +51,13 @@ if (!Object.keys(leagues.value).length) {
 
 function setValuesFromData(data) {
   leagueSeasons.value = Array.from(new Set(data.map((item) => item.league_season))).sort();
-  leagueSeason.value = String(new Date().getFullYear())
   filteredLeagues.value = filterBylLeagueSeason(data);
 }
 
 function changeLeagueSeason(event) {
   leagueSeason.value = event.target.value
   filteredLeagues.value = filterBylLeagueSeason(leagues.value);
+  store.commit('setSeason', leagueSeason.value)
 }
 
 </script>
@@ -74,6 +74,4 @@ function changeLeagueSeason(event) {
     margin-right: 5px;
   }
 }
-
-
 </style>

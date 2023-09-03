@@ -27,7 +27,8 @@
         </div>
       </div>
     </div>
-    <Overlay v-else/>
+    <Overlay v-if="!match && !error"/>
+    <Error v-if="error" :text="error"/>
   </layout-default>
 </template>
 
@@ -36,14 +37,25 @@ import {computed, onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 
 import {request} from "@/api/index.js";
+import {getSeasons} from "@/utils";
 
 const route = useRoute()
 const id = computed(() => route.params.id)
 
 const match = ref(null)
+const error = ref(null)
 
 async function getMatch() {
-  match.value = await (await request(`/?action=get_events&from=2023-01-01&to=2023-12-31&match_id=${id.value}`))[0]
+  const seasons = getSeasons()
+  try {
+    const response = await request(`/?action=get_events&from=${seasons.firstDate}&to=${seasons.secondDate}&match_id=${id.value}`)
+    if (response.error) {
+      throw new Error(response.message)
+    }
+    match.value = await (response)[0]
+  } catch (e) {
+    error.value = "Error caused. Please return to home page"
+  }
 }
 
 onMounted(() => {
