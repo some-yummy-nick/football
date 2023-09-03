@@ -1,27 +1,27 @@
-import Leagues from "@/components/Leagues.vue";
-import League from "@/components/League.vue";
-import Teams from "@/components/Teams.vue";
-import Team from "@/components/Team.vue";
-
 export const routes = [
     {
         path: '/',
         name: 'home',
-        component: Leagues
+        component: () => import("@/components/Leagues.vue"),
     },
     {
         path: '/league/:id',
         name: 'league',
-        component: League,
+        component: () => import("@/components/League.vue"),
     },
     {
         path: '/teams/:league_id',
         name: 'teams',
-        component: Teams
+        component: () => import("@/components/Teams.vue")
     },
     {
         path: '/team/:id',
         name: 'team',
-        component: Team,
+        component: () => import("@/components/Team.vue"),
+    },
+    {
+        path: '/match/:id',
+        name: 'match',
+        component: () => import("@/components/Match.vue")
     },
 ]

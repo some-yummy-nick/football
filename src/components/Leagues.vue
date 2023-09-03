@@ -1,22 +1,24 @@
 <template>
-  <div class="leagues" v-if="leagues">
-    <h1 class="title">Leagues</h1>
-    <div class="leagues__select-seasons">
-      <label class="leagues__season-label">Season</label>
-      <select class="select" @change="changeLeagueSeason" v-model="leagueSeason">
-        <option v-for="(item, index) in leagueSeasons" :value="item" :key="'leagueSeason-' + index">
-          {{ item }}
-        </option>
-      </select>
+  <layout-default>
+    <div class="leagues" v-if="leagues">
+      <h1 class="title">Leagues</h1>
+      <div class="leagues__select-seasons">
+        <label class="leagues__season-label">Season</label>
+        <select class="select" @change="changeLeagueSeason" v-model="leagueSeason">
+          <option v-for="(item, index) in leagueSeasons" :value="item" :key="'leagueSeason-' + index">
+            {{ item }}
+          </option>
+        </select>
+      </div>
+      <div class="item-wrapper">
+        <router-link v-for="league in filteredLeagues" :to="{ name: 'league', params: {id: league.league_id} }"
+                     class="item">
+          {{ league.league_name }}
+        </router-link>
+      </div>
     </div>
-    <div class="item-wrapper">
-      <router-link v-for="league in filteredLeagues" :to="{ name: 'league', params: {id: league.league_id} }"
-                   class="item">
-        {{ league.league_name }}
-      </router-link>
-    </div>
-  </div>
-  <Overlay v-else/>
+    <Overlay v-else/>
+  </layout-default>
 </template>
 
 <script setup>

@@ -1,17 +1,18 @@
 <template>
-  <div v-if="teams">
-    <button class="link reset-btn back" @click="$router.go(-1)">Back</button>
-    <div class="teams" >
-      <h1 class="title">Teams</h1>
-      <div class="item-wrapper">
-        <router-link v-for="team in teams" :to="{ name: 'team', params: {id: team.team_key} }"
-                     class="item">
-          {{ team.team_name }}
-        </router-link>
+  <layout-default>
+    <div v-if="teams">
+      <div class="teams">
+        <h1 class="title">Teams</h1>
+        <div class="item-wrapper">
+          <router-link v-for="team in teams" :to="{ name: 'team', params: {id: team.team_key} }"
+                       class="item">
+            {{ team.team_name }}
+          </router-link>
+        </div>
       </div>
     </div>
-  </div>
-  <Overlay v-else/>
+    <Overlay v-else/>
+  </layout-default>
 </template>
 
 <script setup>
